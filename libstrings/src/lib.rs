@@ -1,5 +1,16 @@
 #![allow(unused)]
 
+pub fn strip_left(s:String) -> String {
+    let mut tmp = String::new();
+    for c in tmp.chars() {
+        match c {
+            ' '|'\t'|'\n'|'\r' => continue,
+            _ => { tmp.push(c); break },
+        }
+    }
+    tmp
+}
+
 pub enum Anystr<'a> {
     StrA(&'a str),
     StrB(String)
@@ -28,8 +39,9 @@ pub fn concat_str(s1: &str, s2: &str) -> String {
 
 #[cfg(test)]
 mod tests {
+
     #[test]
-    fn it_works() {
+    fn test_concat() {
         assert_eq!(super::concat_string("foo".to_string(), "bar".to_string()), "foobar".to_string());
         assert_eq!(super::concat_str("foo", "bar"), "foobar");
         use super::Anystr::*;
@@ -38,4 +50,11 @@ mod tests {
         assert!(super::concat(StrB("foo".to_string()), StrA("bar")) == "foobar".to_string());
         assert!(super::concat(StrB("foo".to_string()), StrB("bar".to_string())) == "foobar".to_string());
     }
+
+    #[test]
+    fn test_strip_left() {
+        // test fails
+        assert!(super::strip_left(String::from("   some text")) == "some text".to_string());
+    }
 }
+
