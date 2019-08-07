@@ -2,10 +2,11 @@
 
 pub fn strip_left(s:String) -> String {
     let mut tmp = String::new();
-    for c in tmp.chars() {
+    let mut found = false;
+    for c in s.chars() {
         match c {
-            ' '|'\t'|'\n'|'\r' => continue,
-            _ => { tmp.push(c); break },
+            ' '|'\t'|'\n'|'\r' if !found => continue,
+            _ => { found = true; tmp.push(c); },
         }
     }
     tmp
